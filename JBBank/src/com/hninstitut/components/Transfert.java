@@ -1,6 +1,5 @@
 package com.hninstitut.components;
 
-import java.time.LocalDate;
 
 public class Transfert extends Flow{
 	
@@ -8,7 +7,7 @@ public class Transfert extends Flow{
 	private int accountIssuingNumber;
 
 	/*---------- Constructeurs -------------*/
-	public Transfert(String comment, double amount, int accountNumber, LocalDate dateOfFlow, boolean effect, int accountIssuingNumber) {
+	public Transfert(String comment, double amount, int accountNumber, String dateOfFlow, boolean effect, int accountIssuingNumber) {
 		super(comment, amount, accountNumber, dateOfFlow, effect);
 		this.setAccountIssuingNumber(accountIssuingNumber);
 	}

@@ -1,6 +1,5 @@
 package com.hninstitut.components;
 
-import java.time.LocalDate;
 
 public abstract class Flow {
 
@@ -11,10 +10,10 @@ public abstract class Flow {
 	private double amount;
 	private int accountNumber;
 	private boolean effect;
-	private LocalDate dateOfFlow;
+	private String dateOfFlow;
 
 	/*---------- Constructeurs -------------*/
-	public Flow(String comment, double amount, int accountNumber, LocalDate dateOfFlow, boolean effect) {
+	public Flow(String comment, double amount, int accountNumber, String dateOfFlow, boolean effect) {
 		this.comment = comment;
 		this.amount = amount;
 		this.accountNumber = accountNumber;
@@ -57,11 +56,11 @@ public abstract class Flow {
 		this.effect = effect;
 	}
 
-	public LocalDate getDateOfFlow() {
+	public String getDateOfFlow() {
 		return dateOfFlow;
 	}
 
-	public void setDateOfFlow(LocalDate dateOfFlow) {
+	public void setDateOfFlow(String dateOfFlow) {
 		this.dateOfFlow = dateOfFlow;
 	}
 
