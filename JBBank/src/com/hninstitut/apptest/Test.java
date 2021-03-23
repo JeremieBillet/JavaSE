@@ -31,7 +31,6 @@ public class Test {
 		
 		//generer hashtable
 		Map<Integer, Account> accountHashTable = genererHashTableAccount(accountList);
-		accountHashTable.get(2).setBalance(150);
 		displayHashTableAccount(accountHashTable);
 
 	}

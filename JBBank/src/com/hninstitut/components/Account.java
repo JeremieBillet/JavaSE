@@ -36,8 +36,8 @@ public abstract class Account {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
-		this.balance = balance;
+	public void setBalance(Flow flow) {
+		this.balance += flow.getAmount();
 	}
 
 	public Client getClient() {
