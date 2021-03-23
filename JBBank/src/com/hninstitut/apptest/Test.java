@@ -192,6 +192,10 @@ public class Test {
 		}
 	}
 	
+	/**
+	 * permet d'ecrire la liste des comptes dans un fichier xml
+	 * @param accountList
+	 */
 	public static void writeToXmlFile(List<Account> accountList) {
 		XmlMapper mapper = new XmlMapper();
 		File file = new File("assets\\account.xml");
