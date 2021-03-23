@@ -45,4 +45,10 @@ public class Client {
 		this.firstName = firstName;
 	}
 
+	public int getClientNumber() {
+		return clientNumber;
+	}
+	
+	
+
 }
