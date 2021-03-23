@@ -37,7 +37,12 @@ public abstract class Account {
 	}
 
 	public void setBalance(Flow flow) {
-		this.balance += flow.getAmount();
+		if (flow instanceof Credit) this.balance += flow.getAmount();
+		if (flow instanceof Debit) this.balance -= flow.getAmount();
+		if (flow instanceof Transfert) {
+			if (this.accountNumber == flow.getAccountNumber()) this.balance += flow.getAmount();
+			if (this.accountNumber == ((Transfert)flow).getAccountIssuingNumber()) this.balance -= flow.getAmount();
+		}
 	}
 
 	public Client getClient() {

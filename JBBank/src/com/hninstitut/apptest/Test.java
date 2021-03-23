@@ -1,17 +1,22 @@
 package com.hninstitut.apptest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.hninstitut.components.Account;
 import com.hninstitut.components.Client;
+import com.hninstitut.components.Credit;
 import com.hninstitut.components.CurrentAccount;
+import com.hninstitut.components.Debit;
+import com.hninstitut.components.Flow;
 import com.hninstitut.components.SavingsAccount;
+import com.hninstitut.components.Transfert;
 
 /**
  * class de test 
@@ -31,6 +36,13 @@ public class Test {
 		
 		//generer hashtable
 		Map<Integer, Account> accountHashTable = genererHashTableAccount(accountList);
+		
+		
+		//creation de transactions
+		List<Flow> flowList = genererTransaction(accountList);
+		
+		//execution des transactions
+		executionTransaction(accountHashTable, flowList);
 		displayHashTableAccount(accountHashTable);
 
 	}
@@ -104,4 +116,54 @@ public class Test {
 		accountHashTable.forEach((k, v) -> System.out.println("cle : "+k+" \tvalue : "+v));
 	}
 	
+	/**
+	 * permet de generer des transactions
+	 * @param accountList
+	 * @return
+	 */
+	public static List<Flow> genererTransaction(List<Account> accountList){
+		List<Flow> flowList = new ArrayList<>();
+		
+		//a debit of 50€ from account n°1
+		flowList.add(new Debit("retrait 50 euros", 50., 1, LocalDate.now().plusDays(2),true));
+		
+		//A credit of 100.50€ on all current accounts in the array of accounts
+		for (Account account : accountList) {
+			if (account instanceof CurrentAccount) flowList.add(new Credit("cadeau de bienvenue", 100.5, account.getAccountNumber(), LocalDate.now().plusDays(2), true));
+		} 
+			
+		//A credit of 1500€ on all savings accounts in this same array
+		for (Account account : accountList) {
+			if (account instanceof SavingsAccount) flowList.add(new Credit("waouh", 1500., account.getAccountNumber(), LocalDate.now().plusDays(2), true));
+		}
+		
+		//A transfer of 50 € from account n ° 1 to account n ° 2
+		flowList.add(new Transfert("remboursement", 50., 2, LocalDate.now().plusDays(2), true, 1));
+		
+		return flowList;
+	}
+	
+	/**
+	 * permet d'executer les transactions
+	 * @param accountMap
+	 * @param flowList
+	 */
+	public static void executionTransaction(Map<Integer, Account> accountMap, List<Flow> flowList) {
+		for (Flow flow : flowList) {
+			accountMap.get(flow.getAccountNumber()).setBalance(flow);
+			if (flow instanceof Transfert) accountMap.get(((Transfert)flow).getAccountIssuingNumber()).setBalance(flow);
+		}
+		displayAccountWithNegativeBalance(accountMap, e -> (e.getBalance() <= 0.));
+	}
+	
+	/**
+	 * permet de vérifier ne condition grace au predicate
+	 * @param accountList
+	 * @param predicate
+	 */
+	public static void displayAccountWithNegativeBalance (Map<Integer, Account> accountList, Predicate<Account> predicate) {
+		for (Account account : accountList.values()) {
+			if (predicate.test(account)) System.out.println("Attention le compte "+account.getAccountNumber()+" a un solde négatif");
+		}
+	}
 }

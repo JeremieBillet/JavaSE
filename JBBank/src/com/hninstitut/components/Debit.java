@@ -1,9 +1,12 @@
 package com.hninstitut.components;
 
+import java.time.LocalDate;
+
 public class Debit extends Flow {
 
-	public Debit(String comment, double amount, int accountNumber, boolean effect) {
-		super(comment, amount, accountNumber, effect);
+	/*---------- Constructeurs -------------*/
+	public Debit(String comment, double amount, int accountNumber, LocalDate dateOfFlow, boolean effect) {
+		super(comment, amount, accountNumber, dateOfFlow, effect);
 	}
 
 }
